@@ -7,6 +7,8 @@
 <style>
   a{
     font-size: unset;
+    color: unset;
+    border: unset;
   }
 /* 	.el-form-item__label{
 		width: 7.5rem!important;
