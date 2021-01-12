@@ -5,6 +5,9 @@
 </template>
 
 <style>
+  a{
+    font-size: unset;
+  }
 /* 	.el-form-item__label{
 		width: 7.5rem!important;
 		padding-right: 1.25rem!important;
