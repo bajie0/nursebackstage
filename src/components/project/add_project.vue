@@ -18,80 +18,90 @@
 						<h2><i class="ion-ios-arrow-forward"></i>{{header_title}}</h2>
 						<p>对平台的上门项目相关信息进行添加、修改。</p>
 					</div>
-					<div>
-						<el-card class="margin20">
-							<el-form ref="itemform" :model="itemform" label-width="80px" label-position="left">
-								<el-form-item label="项目图标">
-									<el-upload class="avatar-uploader" action="https://jsonplaceholder.typicode.com/posts/" :show-file-list="false"
-									 :on-success="handleAvatarSuccess">
-										<img v-if="imageUrl" :src="imageUrl" class="avatar">
-										<i v-else class="el-icon-plus avatar-uploader-icon"></i>
-									</el-upload>
-								</el-form-item>
-								<el-form-item label="项目名称">
-									<el-input v-model="itemform.itemtitle"></el-input>
-								</el-form-item>
-								<el-form-item label="项目分类">
-									<el-select v-model="itemtype" placeholder="请选择项目分类">
-									    <el-option
-									      v-for="item in typeoptions"
-									      :key="item.value"
-									      :label="item.label"
-									      :value="item.value">
-									    </el-option>
-									  </el-select>
-								</el-form-item>
-								<el-row :gutter="40">
-									<el-col :span="5">
-										<el-form-item label="基础费">
-											<div class="inner-left">
-												<el-input v-model="itemform.itemfee"></el-input>
-												<div>元</div>
-											</div>
-										</el-form-item>
-									</el-col>
-									<el-col :span="5">
-										<el-form-item label="交通费">
-											<div class="inner-left">
-												<el-input v-model="itemform.itemfee"></el-input>
-												<div class="Kilometer">元/公里</div>
-											</div>
-										</el-form-item>
-									</el-col>
-								</el-row>
-								
-								<el-form-item label="服务介绍">
-									<div style="padding-bottom: 1.25rem;" v-for="(item,index) in discarr" :key="index">
-										<el-select :disabled="discarr.length != index+1" v-model="item.value" placeholder="请选择服务介绍标题" @change="selectchange(index,$event)">
-											<el-option v-for="(items,indexs) in item.options" :key="indexs" :label="items.label" :value="items.value">
+					<el-card class="margin20" shadow="hover">
+						<el-form ref="itemform" :model="itemform" label-width="80px" label-position="top">
+							<el-row :gutter="20">
+								<el-col :span="8">
+									<el-form-item label="项目名称">
+										<el-input v-model="itemform.itemtitle"></el-input>
+									</el-form-item>
+								</el-col>
+								<el-col :span="8">
+									<el-form-item label="项目分类">
+										<el-select v-model="itemtype" placeholder="请选择项目分类">
+											<el-option v-for="item in typeoptions" :key="item.value" :label="item.label" :value="item.value">
 											</el-option>
 										</el-select>
-										<quill-editor v-model="item.content">
-										</quill-editor>
-										<el-button type="primary" @click="adddisc(index)" v-if="discarr.length == index+1">新增一条</el-button>
-										<el-button type="danger" @click="deldisc(index)">删除</el-button>
-									</div>
-								</el-form-item>
-								<el-form-item label="规格选择">
-									<el-select v-model="sizevalue" multiple placeholder="请选择项目用到的规格" filterable>
-										<el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
-										</el-option>
-									</el-select>
-								</el-form-item>
-								<el-form-item label="创建时间">
-									<el-input :value="+addtime | dateFormat" disabled=""></el-input>
-								</el-form-item>
-								<el-form-item label="上线项目">
-									<el-switch v-model="isonline"></el-switch>
-								</el-form-item>
-								<el-form-item>
-									<div class="inner-center">
-										<el-button type="primary" class="width-4" @click="goitem">发布项目</el-button>
-									</div>
-								</el-form-item>
-							</el-form>
-						</el-card>
-					</div>
+									</el-form-item>
+								</el-col>
+								<el-col :span="8" class="positionbox">
+									<el-form-item class="box">
+										<el-upload class="avatar-uploader" action="https://jsonplaceholder.typicode.com/posts/" :show-file-list="false"
+										 :on-success="handleAvatarSuccess">
+											<img v-if="imageUrl" :src="imageUrl" class="avatar">
+											<i v-else class="el-icon-plus avatar-uploader-icon"></i>
+										</el-upload>
+									</el-form-item>
+								</el-col>
+							</el-row>
+							<el-row :gutter="20">
+								<el-col :span="4">
+									<el-form-item label="基础费(元)">
+										<el-input v-model="itemform.itemfee"></el-input>
+									</el-form-item>
+								</el-col>
+								<el-col :span="4">
+									<el-form-item label="交通费(元)">
+										<el-input v-model="itemform.itemfee"></el-input>
+									</el-form-item>
+								</el-col>
+							</el-row>
+							<el-row>
+								<el-col :span="24">
+									<el-form-item label="服务介绍">
+										<div style="padding-bottom: 1.25rem;" v-for="(item,index) in discarr" :key="index">
+											<el-row :gutter="40">
+												<el-col :span="24">
+													<el-divider content-position="center">
+														<el-button type="text" size="mini" @click="adddisc(index)" v-if="discarr.length == index+1">新增一条</el-button>
+														<el-button type="text" size="mini" @click="deldisc(index)">删除</el-button>
+													</el-divider>													
+												</el-col>
+											</el-row>
+											<el-row :gutter="40">
+												<el-col :span="8">
+													<el-select :disabled="discarr.length != index+1" v-model="item.value" placeholder="请选择服务介绍标题" @change="selectchange(index,$event)">
+														<el-option v-for="(items,indexs) in item.options" :key="indexs" :label="items.label" :value="items.value">
+														</el-option>
+													</el-select>
+												</el-col>
+											
+											</el-row>
+											<el-row>
+												<el-col :span="20">
+													<quill-editor v-model="item.content">
+													</quill-editor>
+												</el-col>
+											</el-row>
+										</div>
+									</el-form-item>
+								</el-col>
+							</el-row>
+							<el-row>
+								<el-col :span="16">
+									<el-form-item label="规格选择(可多选)">
+										<el-select v-model="sizevalue" multiple placeholder="请选择项目用到的规格" filterable>
+											<el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
+											</el-option>
+										</el-select>
+									</el-form-item>
+								</el-col>
+							</el-row>
+						</el-form>
+					</el-card>
+					<el-row class="bottombox inner-center">
+						<el-button type="primary">发布项目</el-button>
+					</el-row>
 				</div>
 			</el-main>
 			<!-- 内容栏 end -->
@@ -102,24 +112,21 @@
 	export default {
 		data() {
 			return {
-				isonline:false,  //是否为上线项目
-				//项目创建时间
-				addtime:'16545416146',
 				//项目分类
 				typeoptions: [{
-						value: '基础护理',
-						label: '基础护理'
-					}, {
-						value: '母婴护理',
-						label: '母婴护理'
-					}, {
-						value: '皮肤护理',
-						label: '皮肤护理'
-					}, {
-						value: '特殊护理',
-						label: '特殊护理'
-					}],
-					itemtype:'',				
+					value: '基础护理',
+					label: '基础护理'
+				}, {
+					value: '母婴护理',
+					label: '母婴护理'
+				}, {
+					value: '皮肤护理',
+					label: '皮肤护理'
+				}, {
+					value: '特殊护理',
+					label: '特殊护理'
+				}],
+				itemtype: '',
 				//规格选择
 				options: [{
 						value: '大换药',
@@ -176,9 +183,6 @@
 					value: '', //服务介绍的标题
 					content: ''
 				}],
-
-
-
 				imageUrl: '',
 				// Form表单Title
 				header_title: "新增上门项目",
@@ -190,12 +194,9 @@
 				}
 			}
 		},
-		created() {
-
-		},
 		methods: {
 			//发布项目
-			goitem(){
+			goitem() {
 				this.$message.success('项目发布成功！')
 			},
 			//监听选择服务介绍的标题
@@ -215,10 +216,13 @@
 			//删除服务介绍
 			deldisc(index) {
 				if (this.discarr.length == 1) return this.$message.error('当前必须有一条服务介绍')
-				this.discarr.splice(index, 1)
-				this.$message.success('删除成功！')
-				this.selected.splice(index, 1)
-				console.log(this.selected)
+				this.$confirm('确认删除这条介绍吗？').then(()=>{
+					this.discarr.splice(index, 1)
+					this.$message.success('删除成功！')
+					this.selected.splice(index, 1)
+				}).catch(()=>{
+					return
+				})
 			},
 			//新增介绍
 			adddisc(index) {
@@ -253,9 +257,17 @@
 </script>
 
 <style>
-	.Kilometer{
-		width: 20.25rem;
+	.ql-editor {
+		height: 14vh;
 	}
+
+	.positionbox .box {
+		z-index: 999;
+		position: absolute;
+		top: 3.125rem;
+		left: 6.25rem;
+	}
+
 	.avatar-uploader .el-upload {
 		border: 1px dashed #d9d9d9;
 		border-radius: 6px;
@@ -271,15 +283,15 @@
 	.avatar-uploader-icon {
 		font-size: 28px;
 		color: #8c939d;
-		width: 70px;
-		height: 70px;
-		line-height: 70px;
+		width: 170px;
+		height: 170px;
+		line-height: 170px;
 		text-align: center;
 	}
 
 	.avatar {
-		width: 70px;
-		height: 70px;
+		width: 170px;
+		height: 170px;
 		display: block;
 	}
 </style>
