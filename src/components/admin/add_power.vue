@@ -159,14 +159,15 @@
     },
     created() {
       this.getPowerJson()
-      if (this.$route.params.power_id) {
+      if (this.$route.query.id) {
         this.header_title = "修改权限"
-        this.form_url = "/api/patch/power/?id=" + this.$route.params.power_id
+        this.form_url = "/api/patch/power/?id=" + this.$route.query.id
         this.getPowerData()
       } else {
         this.header_title = "新增权限"
         this.form_url = "/api/create/power/"
       }
+	  console.log(this.form_url)
     },
     methods: {
       // Form表单提交
@@ -193,8 +194,10 @@
       },
       // 引入编辑权限Form
       getPowerData() {
-        let url = "/api/get/power_form/?id=" + this.$route.params.power_id
-        ApiData(url).then((response) => {
+        let url = "/api/get/power_form/"
+        ApiData(url,{
+					id:this.$route.query.id
+				}).then((response) => {
           this.formContent.power_type = response.form_data[0]['power_type']
           this.formContent.power_parent = response.form_data[0]['power_parent']
           this.formContent.power_title = response.form_data[0]['power_title']

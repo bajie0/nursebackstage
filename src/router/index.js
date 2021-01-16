@@ -110,6 +110,55 @@ const router = new Router({
 			}
 		},
 		{
+			path: "/interface/bigpicture",
+			component: () => import("../components/interface/bigpicture"),
+			meta: {
+				title: "首页大图管理"
+			}
+		},
+		{
+			path: "/nurse/add_nurse",
+			component: () => import("../components/nurse/add_nurse"),
+			meta: {
+				title: "新增上门护士"
+			}
+		},
+		{
+			path: "/nurse/data_nurse",
+			component: () => import("../components/nurse/data_nurse"),
+			meta: {
+				title: "上门护士管理"
+			}
+		},
+		{
+			path: "/assignment/data_appointment",
+			component: () => import("../components/assignment/data_appointment"),
+			meta: {
+				title: "病人预约管理"
+			}
+		},
+		{
+			path: "/assignment/data_assignment",
+			component: () => import("../components/assignment/data_assignment"),
+			meta: {
+				title: "护士分配管理"
+			}
+		},
+		{
+			path: "/order/data_order",
+			component: () => import("../components/order/data_order"),
+			meta: {
+				title: "订单管理"
+			}
+		},
+		{
+			path: "/order/data_workload",
+			component: () => import("../components/order/data_workload"),
+			meta: {
+				title: "护士工作量统计"
+			}
+		},
+		{
 			path: "/user-config",
 			component: () => import("../components/default/user_config"),
 			meta: {
@@ -124,7 +173,7 @@ const router = new Router({
 			}
 		},
 		{
-			path: "/admin/patch-power/:power_id",
+			path: "/admin/patch-power",
 			component: () => import("../components/admin/add_power"),
 			meta: {
 				title: "修改权限"

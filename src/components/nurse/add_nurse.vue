@@ -16,22 +16,19 @@
 				<div class="ui-container">
 					<div class="ui-container-header">
 						<h2><i class="ion-ios-arrow-forward"></i>{{header_title}}</h2>
-						<p>对平台的上门项目相关信息进行添加、修改。</p>
+						<p>对平台的上门护士相关信息进行添加、修改。</p>
 					</div>
 					<el-card class="margin20" shadow="hover">
-						<el-form ref="itemform" :model="itemform" label-width="80px" label-position="top">
+						<el-form ref="nurseform" :model="nurseform" label-width="80px" label-position="top">
 							<el-row :gutter="20">
 								<el-col :span="8">
-									<el-form-item label="项目名称">
-										<el-input v-model="itemform.itemtitle"></el-input>
+									<el-form-item label="护士姓名">
+										<el-input v-model="nurseform.name" placeholder="请输入护士姓名"></el-input>
 									</el-form-item>
 								</el-col>
 								<el-col :span="8">
-									<el-form-item label="项目分类">
-										<el-select v-model="itemtype" placeholder="请选择项目分类">
-											<el-option v-for="item in typeoptions" :key="item.value" :label="item.label" :value="item.value">
-											</el-option>
-										</el-select>
+									<el-form-item label="工号">
+										<el-input v-model="nurseform.number" placeholder="请输入护士工号"></el-input>
 									</el-form-item>
 								</el-col>
 								<el-col :span="8" class="positionbox">
@@ -41,70 +38,61 @@
 											<img v-if="imageUrl" :src="imageUrl" class="avatar">
 											<i v-else class="el-icon-plus avatar-uploader-icon"></i>
 										</el-upload>
+										<el-row class="uploadtext">上传照片</el-row>
 									</el-form-item>
 								</el-col>
 							</el-row>
 							<el-row :gutter="20">
-								<el-col :span="4">
-									<el-form-item label="基础费(元)">
-										<el-input v-model="itemform.itemfee"></el-input>
-									</el-form-item>
-								</el-col>
-								<el-col :span="4">
-									<el-form-item label="交通费(元)">
-										<el-input v-model="itemform.itemfee"></el-input>
+								<el-col :span="8">
+									<el-form-item label="身份证号">
+										<el-input v-model="nurseform.itemfee" placeholder="请输入身份证号"></el-input>
 									</el-form-item>
 								</el-col>
 							</el-row>
-							<el-row>
-								<el-col :span="24">
-									<el-form-item label="服务介绍">
-										<div style="padding-bottom: 1.25rem;" v-for="(item,index) in discarr" :key="index">
-											<el-row :gutter="40">
-												<el-col :span="24">
-													<el-divider content-position="center" v-if="discarr.length != 1 && index != 0">
-														<el-button type="text" size="mini" @click="deldisc(index)">删除</el-button>
-													</el-divider>													
-												</el-col>
-											</el-row>
-											<el-row :gutter="40">
-												<el-col :span="8">
-													<el-select :disabled="discarr.length != index+1" v-model="item.value" placeholder="请选择服务介绍标题" @change="selectchange(index,$event)">
-														<el-option v-for="(items,indexs) in item.options" :key="indexs" :label="items.label" :value="items.value">
-														</el-option>
-													</el-select>
-												</el-col>
-											
-											</el-row>
-											<el-row>
-												<el-col :span="20">
-													<quill-editor v-model="item.content">
-													</quill-editor>
-												</el-col>
-											</el-row>
-											<el-row>
-												<el-col :span="20">
-													<el-button class="width-24 addbutton" plain size="" @click="adddisc(index)" v-if="discarr.length == index+1">新增一条</el-button>
-												</el-col>
-											</el-row>
-										</div>
+							<el-row :gutter="20">
+								<el-col :span="8">
+									<el-form-item label="最高学历">
+										<el-input v-model="nurseform.itemfee" placeholder="请输入最高学历"></el-input>
+									</el-form-item>
+								</el-col>
+								<el-col :span="8">
+									<el-form-item label="毕业院校">
+										<el-input v-model="nurseform.itemfee" placeholder="请输入毕业院校"></el-input>
 									</el-form-item>
 								</el-col>
 							</el-row>
-							<el-row>
-								<el-col :span="16">
-									<el-form-item label="规格选择(可多选)">
-										<el-select v-model="sizevalue" multiple placeholder="请选择项目用到的规格" filterable>
-											<el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
-											</el-option>
-										</el-select>
+							<el-row :gutter="20">
+								<el-col :span="8">
+									<el-form-item label="职业证书号">
+										<el-input v-model="nurseform.itemfee" placeholder="请输入职业证书号"></el-input>
+									</el-form-item>
+								</el-col>
+								<el-col :span="8">
+									<el-form-item label="参加工作时间">
+										<el-date-picker
+										      v-model="value1"
+										      type="date"
+										      placeholder="选择日期时间">
+										    </el-date-picker>
+									</el-form-item>
+								</el-col>
+							</el-row>
+							<el-row :gutter="20">
+								<el-col :span="21">
+									<el-form-item label="专业方向及擅长">
+										<el-input
+										  type="textarea"
+										  :rows="5"
+										  placeholder="请输入专业方向及特长"
+										  v-model="textarea">
+										</el-input>
 									</el-form-item>
 								</el-col>
 							</el-row>
 						</el-form>
 					</el-card>
 					<el-row class="bottombox inner-center">
-						<el-button type="primary">发布项目</el-button>
+						<el-button type="primary">创建护士</el-button>
 					</el-row>
 				</div>
 			</el-main>
@@ -116,6 +104,8 @@
 	export default {
 		data() {
 			return {
+				//参加工作时间
+				value1: '',
 				//项目分类
 				typeoptions: [{
 					value: '基础护理',
@@ -189,8 +179,8 @@
 				}],
 				imageUrl: '',
 				// Form表单Title
-				header_title: "新增上门项目",
-				itemform: {
+				header_title: "新增上门护士",
+				nurseform: {
 					itemtitle: '',
 					itemicon: '',
 					itembaseprice: '',
@@ -275,6 +265,12 @@
 		top: 3.125rem;
 		left: 6.25rem;
 	}
+	.positionbox .box .uploadtext{
+		color: #CCCCCC;
+		position: absolute;
+		left: 50%;
+		transform: translate(-50%,-40%);
+	}
 
 	.avatar-uploader .el-upload {
 		border: 1px dashed #d9d9d9;
@@ -292,14 +288,14 @@
 		font-size: 28px;
 		color: #8c939d;
 		width: 170px;
-		height: 170px;
-		line-height: 170px;
+		height: 240px;
+		line-height: 240px;
 		text-align: center;
 	}
 
 	.avatar {
 		width: 170px;
-		height: 170px;
+		height: 240px;
 		display: block;
 	}
 </style>
