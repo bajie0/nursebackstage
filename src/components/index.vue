@@ -14,52 +14,58 @@
 			<!-- 内容栏 start -->
 			<el-main>
 				<div class="ui-container paddinglr40">
-					<div class="text">总览</div>
-					<div class="inner-justify">
-						<el-card shadow="hover">
-							<div class="inner-column-center">
-								<div class="inner-justify width-19">当前项目数<el-tag>项</el-tag>
+					<div class="margintb30">
+						<div class="margintb10">
+							<span class="text">总览</span>
+						</div>
+						<div class="inner-justify">
+							<el-card shadow="hover">
+								<div class="inner-column-center">
+									<div class="inner-justify width-19">当前项目数<el-tag>项</el-tag>
+									</div>
+									<animate-number from="0" to="51" duration="3000" class="number"></animate-number>
 								</div>
-								<animate-number from="0" to="51" duration="3000" class="number"></animate-number>
-							</div>
-						</el-card>
-						<el-card shadow="hover">
-							<div class="inner-column-center">
-								<div class="inner-justify width-19">当前护士数<el-tag>人</el-tag>
+							</el-card>
+							<el-card shadow="hover">
+								<div class="inner-column-center">
+									<div class="inner-justify width-19">当前护士数<el-tag>人</el-tag>
+									</div>
+									<animate-number from="0" to="221" duration="3000" class="number"></animate-number>
 								</div>
-								<animate-number from="0" to="221" duration="3000" class="number"></animate-number>
-							</div>
-						</el-card>
-						<el-card shadow="hover">
-							<div class="inner-column-center">
-								<div class="inner-justify width-19">今日预约量<el-tag>个</el-tag>
+							</el-card>
+							<el-card shadow="hover">
+								<div class="inner-column-center">
+									<div class="inner-justify width-19">今日预约量<el-tag>个</el-tag>
+									</div>
+									<animate-number from="0" to="101" duration="3000" class="number"></animate-number>
 								</div>
-								<animate-number from="0" to="101" duration="3000" class="number"></animate-number>
-							</div>
-						</el-card><el-card shadow="hover">
-							<div class="inner-column-center">
-								<div class="inner-justify width-19">订单已完成<el-tag>条</el-tag>
+							</el-card><el-card shadow="hover">
+								<div class="inner-column-center">
+									<div class="inner-justify width-19">订单已完成<el-tag>条</el-tag>
+									</div>
+									<animate-number from="0" to="51" duration="3000" class="number"></animate-number>
 								</div>
-								<animate-number from="0" to="51" duration="3000" class="number"></animate-number>
-							</div>
-						</el-card><el-card shadow="hover">
-							<div class="inner-column-center">
-								<div class="inner-justify width-19">中途终止<el-tag>条</el-tag>
+							</el-card><el-card shadow="hover">
+								<div class="inner-column-center">
+									<div class="inner-justify width-19">中途终止<el-tag>条</el-tag>
+									</div>
+									<animate-number from="0" to="2" duration="3000" class="number"></animate-number>
 								</div>
-								<animate-number from="0" to="2" duration="3000" class="number"></animate-number>
-							</div>
-						</el-card>
-						<el-card shadow="hover">
-							<div class="inner-column-center">
-								<div class="inner-justify width-19">退款订单<el-tag>条</el-tag>
+							</el-card>
+							<el-card shadow="hover">
+								<div class="inner-column-center">
+									<div class="inner-justify width-19">退款订单<el-tag>条</el-tag>
+									</div>
+									<animate-number from="0" to="5" duration="3000" class="number"></animate-number>
 								</div>
-								<animate-number from="0" to="5" duration="3000" class="number"></animate-number>
-							</div>
-						</el-card>
+							</el-card>
+						</div>
 					</div>
 					<div class="clearfloat box3">
 						<div class="fl" style="width: 63%;">
-							<div class="text">护士行程监督</div>
+							<div class="margintb10">
+								<span class="text">护士行程监督</span>
+							</div>
 							<div class="inner-justify">
 								<el-card shadow="hover">
 									<div class="inner-column-center">
@@ -92,7 +98,9 @@
 							</div>
 						</div>
 						<div class="fr box4" style="width: 33%;">
-							<div class="text">病人预约审核</div>
+							<div class="margintb10">
+								<span class="text">病人预约审核</span>
+							</div>
 							<div class="inner-justify">
 								<el-card shadow="hover">
 									<div class="inner-column-center">
@@ -222,6 +230,9 @@
 </script>
 
 <style scoped="">
+	.text{
+		padding-left: 0.625rem;
+	}
 	.ui-container .el-card {
 		width: 15%;
 		height: unset;
