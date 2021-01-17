@@ -25,6 +25,10 @@ Vue.filter('dateFormat',function(originVal){
 	return `${y}-${m}-${d}-${hh}:${mm}:${ss}`
 })
 
+//引入动态数字
+import VueAnimateNumber from 'vue-animate-number'
+Vue.use(VueAnimateNumber)
+
 //引入富文本编辑器
 import VueQuillEditor from 'vue-quill-editor'
 

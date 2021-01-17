@@ -16,6 +16,7 @@
   "dependencies": {
     "ajv": "^5.5.2",
     "axios": "^0.20.0",
+    "echarts": "^5.0.1",
     "element-ui": "^2.13.2",
     "file-loader": "^1.1.11",
     "identify": "^0.1.5",
@@ -26,6 +27,7 @@
     "screenfull": "^5.0.2",
     "url-loader": "^0.5.9",
     "vue": "^2.5.2",
+    "vue-animate-number": "^0.4.2",
     "vue-axios": "^2.1.5",
     "vue-cookies": "^1.7.4",
     "vue-okr-tree": "^1.0.4",
