@@ -16,23 +16,22 @@
 				<div class="ui-container">
 					<div class="ui-container-header">
 						<h2><i class="ion-ios-arrow-forward"></i>{{header_title}}</h2>
-						<p>对平台的栏目相关信息进行添加、修改。</p>
+						<p>对平台的栏目相关信息进行添加操作。</p>
 					</div>
-					<div>
-						<el-card class="margin20">
-							<el-form ref="columnform" :model="columnformdata" label-width="80px">
-								<el-form-item label="栏目名称">
-									<el-input v-model="columnformdata.name"></el-input>
-								</el-form-item>
-								<el-form-item label="开启栏目">
-									<el-switch v-model="columnformdata.isopen"></el-switch>
-								</el-form-item>
-								<el-form-item>
-									<el-button type="primary" @click="save">保存</el-button>
-									<el-button>重置</el-button>
-								</el-form-item>
-							</el-form>
-						</el-card>
+					<div class="margin20 paddinglr50">
+						<el-form ref="columnform" :model="columnformdata" label-width="80px" label-position="top">
+							<el-row>
+								<el-col :span="10">
+									<el-form-item label="栏目名称" required="">
+										<el-input v-model="columnformdata.name"></el-input>
+									</el-form-item>
+								</el-col>
+							</el-row>
+							<el-form-item>
+								<el-button type="primary" @click="save">保存</el-button>
+								<el-button @click="reset">重置</el-button>
+							</el-form-item>
+						</el-form>
 					</div>
 				</div>
 			</el-main>
@@ -43,23 +42,12 @@
 <script>
 	export default {
 		data() {
-			// 自定义密码验证
-			var pass_verification = (rule, value, callback) => {
-				if (value === '') {
-					callback(new Error('请输入确认密码'))
-				} else if (value !== this.formContent.admin_pass_word) {
-					callback(new Error('两次输入密码不一致!'))
-				} else {
-					callback()
-				}
-			};
-
 			return {
 				// Form表单Title
 				header_title: "新增栏目",
+				//栏目数据
 				columnformdata: {
-					name: '',
-					isopen: false
+					name: ''
 				}
 			}
 		},
@@ -67,14 +55,19 @@
 
 		},
 		methods: {
+			//保存
 			save() {
 				if (!this.columnformdata.name) {
-					return this.$message('栏目名称不能为空')
+					return this.$message.error('栏目名称不能为空')
 				}
 				this.$message({
 					message: '保存成功',
 					type: 'success'
 				});
+				this.columnformdata.name = ''
+			},
+			//重置
+			reset(){
 				this.columnformdata.name = ''
 			}
 		}

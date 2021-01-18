@@ -230,6 +230,9 @@
 </script>
 
 <style scoped="">
+	.el-card:hover{
+		cursor: pointer;
+	}
 	.text{
 		padding-left: 0.625rem;
 	}

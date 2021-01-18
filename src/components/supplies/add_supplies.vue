@@ -16,38 +16,49 @@
 				<div class="ui-container">
 					<div class="ui-container-header">
 						<h2><i class="ion-ios-arrow-forward"></i>{{header_title}}</h2>
-						<p>对平台的耗材相关信息进行添加、修改。</p>
+						<p>对平台的耗材相关信息进行添加操作。</p>
 					</div>
-					<div>
-						<el-card class="margin20">
-							<el-form ref="specificationform" :model="formdata" label-width="80px">
-								<el-form-item label="耗材名称">
-									<el-input v-model="formdata.title"></el-input>
-								</el-form-item>
-								<el-form-item label="耗材单位">
-									<el-input v-model="formdata.unit"></el-input>
-								</el-form-item>
-								<el-form-item label="耗材单价">
-									<div class="inner-left">
-										<el-input v-model="formdata.price" type="number"></el-input>
-										<div>元</div>
-									</div>
-								</el-form-item>
-								<el-form-item label="与规格绑定">
-									<el-input v-model="formdata.unit"></el-input>
-								</el-form-item>
-								<el-form-item label="录入时间">
-									<el-input  disabled="" :value="formdata.datetime | dateFormat"></el-input>
-								</el-form-item>
-								<el-form-item label="开启耗材">
-									<el-switch v-model="formdata.isopen"></el-switch>
-								</el-form-item>
-								<el-form-item>
-									<el-button type="primary" @click="save">保存</el-button>
-									<el-button>重置</el-button>
-								</el-form-item>
-							</el-form>
-						</el-card>
+					<div class="margin20 paddinglr50">
+						<el-form ref="suppliesform" :model="formdata" label-width="80px" label-position="top" :show-message="false">
+							<el-row :gutter="20">
+								<el-col :span="8">
+									<el-form-item label="耗材名称" required="" prop="title">
+										<el-input v-model="formdata.title"></el-input>
+									</el-form-item>
+								</el-col>
+								<el-col :span="8">
+									<el-form-item label="耗材单位" required="" prop="unit">
+										<el-input v-model="formdata.unit"></el-input>
+									</el-form-item>
+								</el-col>
+								<el-col :span="3">
+									<el-form-item label="耗材单价" required="" prop="price">
+										<div class="inner-left">
+											<el-input v-model="formdata.price" type="number"></el-input>
+											<div class="paddinglr10">元</div>
+										</div>
+									</el-form-item>
+								</el-col>
+							</el-row>
+							<el-row :gutter="20">
+								<el-col :span="8">
+									<el-form-item label="耗材与规格绑定" prop="list">
+										<el-select filterable v-model="formdata.list" multiple placeholder="请选择">
+											<div slot="empty" class="inner-justify padding20">
+												<div>
+													当前还没有规格
+												</div>
+												<el-button type="primary" size="mini" @click="tospecification">新增规格</el-button>
+											</div>
+											<el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
+											</el-option>
+										</el-select>
+									</el-form-item>
+								</el-col>
+							</el-row>
+							<el-button type="primary" @click="save">保存</el-button>
+							<el-button @click="reset">重置</el-button>
+						</el-form>
 					</div>
 				</div>
 			</el-main>
@@ -61,38 +72,53 @@
 			return {
 				// Form表单Title
 				header_title: "新增耗材",
-				//耗材表单输入的数据
+				//耗材数据
 				formdata: {
-					title: '',  //耗材名称
-					unit:'',  //单位
-					price:'',  //单价
-					datetime:'', //录入时间
-					isopen: false  //开启规格
-				}
+					title: '',
+					unit: '',
+					price: '',
+					//选择绑定的规格数组
+					list: []
+				},
+				//规格列表json
+				options: []
+				
 			}
 		},
 		created() {
-			this.gettime()	
-					console.log(this.$store.state.$username)
+			this.getspecification()
 		},
 		methods: {
+			//跳转到新增规格页面
+			tospecification(){
+				this.$router.push('/specification/add_specification')
+			},
+			//获取所有的规格名称列表
+			getspecification(){
+				//调用获取数据接口
+				
+				
+			},
+			//保存
 			save() {
 				if (!this.formdata.title) {
-					return this.$message.error('规格名称不能为空')
+					return this.$message.error('耗材名称不能为空')
+				}
+				if (!this.formdata.unit) {
+					return this.$message.error('耗材单位不能为空')
+				}
+				if (!this.formdata.price) {
+					return this.$message.error('耗材单价不能为空')
 				}
 				this.$message({
 					message: '保存成功',
 					type: 'success'
 				});
-				for(let n in this.formdata){
-					this.formdata[n] = ''
-				}
-				this.formdata.isopen = false
+				this.$refs.suppliesform.resetFields()
 			},
-			gettime(){
-				const timestamp = new Date().getTime()
-				console.log(timestamp)
-				this.formdata.datetime = timestamp
+			//重置
+			reset() {
+				this.$refs.suppliesform.resetFields()
 			}
 		}
 	}
