@@ -13,12 +13,12 @@
 			<!-- 置顶栏 end -->
 			<!-- 内容栏 start -->
 			<el-main>
-				<div class="ui-container">
+				<div class="ui-container addspecification">
 					<div class="ui-container-header">
 						<h2><i class="ion-ios-arrow-forward"></i>{{header_title}}</h2>
-						<p>对平台的规格相关信息进行添加操作。</p>
+						<p>{{labeltext}}</p>
 					</div>
-					<div class="margin20 paddinglr50">
+					<div class="margin20 paddinglr50 box">
 						<el-form ref="suppliesform" :model="formdata" label-width="80px" label-position="top" :show-message="false">
 							<el-row :gutter="20">
 								<el-col :span="8">
@@ -37,8 +37,11 @@
 							</el-row>
 							<el-row :gutter="20">
 								<el-col :span="24">
-									<el-form-item label="绑定耗材" prop="list">
+									<el-form-item label="绑定耗材">
 										<el-transfer filterable filter-placeholder="请输入耗材名称" v-model="value" :data="data" :titles="bandlelist">
+											<div slot="left-footer" class="inner-center margintb10">
+												<el-button class="ui-primary" size="mini" @click="addspecification">新增耗材</el-button>
+											</div>
 											<div slot-scope="data">
 												<div class="inner-justify">
 													<div class="labeltext width-18">
@@ -53,9 +56,11 @@
 									</el-form-item>
 								</el-col>
 							</el-row>
-							<el-button type="primary" @click="save">保存</el-button>
-							<el-button @click="reset">重置</el-button>
 						</el-form>
+					</div>
+					<div class="bottombox inner-center">
+						<el-button type="primary" @click="save">保存</el-button>
+						<el-button @click="reset">重置</el-button>
 					</div>
 				</div>
 			</el-main>
@@ -67,6 +72,9 @@
 	export default {
 		data() {
 			return {
+				// Form表单Title
+				header_title: "新增规格",
+				labeltext:'对平台的规格相关信息进行添加操作。',
 				bandlelist: ['所有耗材', '该规格内的耗材'],
 				data: [{
 						key: 1,
@@ -97,18 +105,25 @@
 						key: 6,
 						label: '一次性注射器6666',
 						number: 1
+					},
+					{
+						key: 7,
+						label: '一次性555注射器',
+						number: 1
+					},
+					{
+						key: 8,
+						label: '一次性注射器6666',
+						number: 1
 					}
 				],
+				//选中并穿梭到右侧的耗材的key的数组
 				value: [],
-				// Form表单Title
-				header_title: "新增规格",
+
 				//规格数据
 				formdata: {
 					title: '',
-					unit: '',
-					price: '',
-					//选择绑定的规格数组
-					list: []
+					formdata: ''
 				},
 				//规格列表json
 				options: []
@@ -116,18 +131,39 @@
 			}
 		},
 		watch: {
-			'formdata.title'(e) {
-				console.log(e)
-				this.bandlelist[1] = e
-			},
 			value(e) {
 				console.log(e)
+			},
+			'formdata.price'(e){
+				if(e < 0) {
+					this.$message.error('不能输入负数')
+					this.formdata.price = 0
+				}
 			}
 		},
 		created() {
+			this.addoredit()
 			this.getspecification()
 		},
 		methods: {
+			addoredit(){
+				if(this.$route.params.id){
+					console.log('这是一个编辑页面')
+					this.header_title = '编辑规格'
+					this.labeltext = '对平台的规格相关信息进行编辑操作'
+					// 调根据id值获取数据的接口
+					
+					
+					
+				}
+				else{
+					console.log('这是一个新增页面')
+				}
+			},
+			//新增耗材
+			addspecification(){
+				this.$router.push('/supplies/add_supplies')
+			},
 			//跳转到新增规格页面
 			tospecification() {
 				this.$router.push('/specification/add_specification')
@@ -143,26 +179,43 @@
 				if (!this.formdata.title) {
 					return this.$message.error('规格名称不能为空')
 				}
-				if (!this.formdata.unit) {
-					return this.$message.error('规格单位不能为空')
-				}
 				if (!this.formdata.price) {
-					return this.$message.error('规格单价不能为空')
+					return this.$message.error('操作费不能为空')
 				}
+				let arr = []
+				for (let item of this.data) {
+					for (let items of this.value) {
+						if(item.key == items){
+							 //二维数组的第一项为选中的规格的耗材的key,第二项为对应的数量
+							arr.push([item.key,item.number])  
+						}
+					}
+				}
+				console.log(arr)
+				// 调绑定耗材的接口
+				
+				
 				this.$message({
 					message: '保存成功',
 					type: 'success'
 				});
 				this.$refs.suppliesform.resetFields()
+				this.value = []
 			},
 			//重置
 			reset() {
 				this.$refs.suppliesform.resetFields()
+				this.value = []
 			}
 		}
 	}
 </script>
 <style>
+	.addspecification .box{
+		background-color: white;
+		height: calc(100vh - 190px - 11vh);
+		overflow: scroll;
+	}
 	.el-transfer-panel__item.el-checkbox {
 		margin: 0;
 	}

@@ -82,6 +82,13 @@ const router = new Router({
 			}
 		},
 		{
+			path: "/specification/edit/:id",
+			component: () => import("../components/specification/add_specification"),
+			meta: {
+				title: "编辑规格"
+			}
+		},
+		{
 			path: "/supplies/add_supplies",
 			component: () => import("../components/supplies/add_supplies"),
 			meta: {
@@ -100,6 +107,13 @@ const router = new Router({
 			component: () => import("../components/project/add_project"),
 			meta: {
 				title: "新增上门项目"
+			}
+		},
+		{
+			path: "/project/edit/:id",
+			component: () => import("../components/project/add_project"),
+			meta: {
+				title: "编辑项目"
 			}
 		},
 		{
@@ -313,14 +327,11 @@ router.beforeEach((to, from, next) => {
 		} else {
 			store.state.side_select = to.path
 			// 获取页面权限json
-			if(!store.state.power_list){
-				let url = "/api/get/power_authority/"
-				ApiData(url).then((response) => {
-					console.log(response.power_data)
-					store.state.power_list = response.power_data
-				})
-			}
-			
+			let url = "/api/get/power_authority/"
+			ApiData(url).then((response) => {
+				console.log(response.power_data)
+				store.state.power_list = response.power_data
+			})
 			// 进入页面
 			next()
 		}

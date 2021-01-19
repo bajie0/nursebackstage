@@ -16,7 +16,7 @@
 				<div class="ui-container">
 					<div class="ui-container-header">
 						<h2><i class="ion-ios-arrow-forward"></i>{{header_title}}</h2>
-						<p>对平台的上门项目相关信息进行添加、修改。</p>
+						<p>{{labeltext}}</p>
 					</div>
 					<el-card class="margin20" shadow="hover">
 						<el-form ref="itemform" :model="itemform" label-width="80px" label-position="top">
@@ -190,6 +190,7 @@
 				imageUrl: '',
 				// Form表单Title
 				header_title: "新增上门项目",
+				labeltext:'对平台的上门项目相关信息进行添加操作。',
 				itemform: {
 					itemtitle: '',
 					itemicon: '',
@@ -198,7 +199,25 @@
 				}
 			}
 		},
+		created() {
+			this.addoredit()
+		},
 		methods: {
+			//判断是编辑页还是新增页
+			addoredit(){
+				if(this.$route.params.id){
+					console.log('这是一个编辑页面')
+					this.header_title = '编辑项目'
+					this.labeltext = '对平台的项目相关信息进行编辑操作'
+					// 调根据id值获取数据的接口
+					
+					
+					
+				}
+				else{
+					console.log('这是一个新增页面')
+				}
+			},
 			//发布项目
 			goitem() {
 				this.$message.success('项目发布成功！')
